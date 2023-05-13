@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 // importamos connect para conectarnos con redux
-import { connect } from 'react-redux'
+
 import { Col } from 'antd';
 import PokemonList from './components/PokemonList';
 import Searcher from './components/Searcher';
@@ -9,15 +9,26 @@ import logo from './statics/logo.svg'
 import { getPokemon } from './api';
 //importamos la accion setPokemons para utilizarla en el mapDispatchToprops
 //y la renombramos con "as" para que no halla colision con la funcion seteadora.
-import { setPokemons as setPokemonsActions } from './actions';
+import { setPokemons } from './actions';
+import { useDispatch, useSelector } from 'react-redux';
 
-function App({ pokemons, setPokemons }) {
-  console.log("🚀 ~ file: App.js:15 ~ App ~ pokemons:", pokemons)
+function App() {
+
+  //en useSelector recibe el estado y retorna el valor que quiere recibir del estado: state.pokemons
+
+  const pokemons = useSelector(state => state.pokemons)
+
+
+  //crearemos el dispatcher inicializando el useDispatcher
+  const dispatch = useDispatch()
 
   useEffect(() => {
     const fetchPokemons = async () => {
       const pokemonsRes = await getPokemon()
-      setPokemons(pokemonsRes)
+
+      //haremos un llamado de la accion setPokemons , que a su vez le estamos pasando los datos que vienen de la API
+      //y la dispararemos con dispatch
+      dispatch(setPokemons(pokemonsRes))
     }
     fetchPokemons()
   }, [])
@@ -36,30 +47,5 @@ function App({ pokemons, setPokemons }) {
 }
 
 
-//tendremos dos variables: mapStateToProps y mapDispatchToProps
-//(llamadas asi por convension)
-
-
-// mapStateToProps recibe como parametro el state
-// esta funcion regresa un objeto donde sus propiedades seran enviadas a las props del componente 
-// que se conecta a redux
-const mapStateToProps = (state) => ({
-  pokemons: state.pokemons
-})
-
-//esta funcion recibe el dispatcher de redux y va retornar un objeto que va a ser 
-//mapeado a nuestras propiedades pero con los actionsCreator que ya establecimos previamente
-const mapDispatchToProps = dispatch => ({
-  setPokemons: values => dispatch(setPokemonsActions(values))
-})
-
-
-
-//de esta forma se conecta el componente al store de redux. 
-// las funciones definen como se mapea(enlaza) el estado y las acciones de redux a las propiedades del componente
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
-
-//(App) retorna una funcion que se invoca con el componente App
-
+export default App
 
