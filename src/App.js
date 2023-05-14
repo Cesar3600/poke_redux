@@ -6,7 +6,7 @@ import PokemonList from './components/PokemonList';
 import Searcher from './components/Searcher';
 import './App.css';
 import logo from './statics/logo.svg'
-import { getPokemon } from './api';
+import { getPokemon, getPokemonDetails } from './api';
 //importamos la accion setPokemons para utilizarla en el mapDispatchToprops
 //y la renombramos con "as" para que no halla colision con la funcion seteadora.
 import { setPokemons } from './actions';
@@ -25,10 +25,10 @@ function App() {
   useEffect(() => {
     const fetchPokemons = async () => {
       const pokemonsRes = await getPokemon()
-
+      const pokemonsDetailed = await Promise.all(pokemonsRes.map(pokemon => getPokemonDetails(pokemon)))
       //haremos un llamado de la accion setPokemons , que a su vez le estamos pasando los datos que vienen de la API
       //y la dispararemos con dispatch
-      dispatch(setPokemons(pokemonsRes))
+      dispatch(setPokemons(pokemonsDetailed))
     }
     fetchPokemons()
   }, [])
