@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useState, useEffect } from 'react'
 // importamos connect para conectarnos con redux
 
 import { Col } from 'antd';
@@ -11,16 +11,20 @@ import { getPokemon } from './api';
 //y la renombramos con "as" para que no halla colision con la funcion seteadora.
 import { setPokemons } from './actions';
 import { useDispatch, useSelector } from 'react-redux';
+//import { useDispatch, useSelector } from 'react-redux';
 
 function App() {
 
   //en useSelector recibe el estado y retorna el valor que quiere recibir del estado: state.pokemons
 
-  const pokemons = useSelector(state => state.pokemons)
 
 
   //crearemos el dispatcher inicializando el useDispatcher
+
   const dispatch = useDispatch()
+
+  const listPokemons = useSelector(state => state.pokemons)
+
 
   useEffect(() => {
     const fetchPokemons = async () => {
@@ -41,10 +45,12 @@ function App() {
       <Col span={8} offset={8}>
         <Searcher />
       </Col>
-      <PokemonList pokemons={pokemons} />
+      <PokemonList pokemons={listPokemons} />
     </div>
   );
 }
+
+
 
 
 export default App

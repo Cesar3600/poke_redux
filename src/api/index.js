@@ -2,7 +2,7 @@ import axios from "axios"
 
 export async function getPokemon() {
   try {
-    const response = await axios.get('https://pokeapi.co/api/v2/pokemon?limit100000&offset=0');
+    const response = await axios.get('https://pokeapi.co/api/v2/pokemon?limit151');
     console.log("🚀 ~ file: index.js:6 ~ getPokemon ~ response:", response)
     return response.data.results;
   }
