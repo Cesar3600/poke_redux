@@ -9,7 +9,7 @@ import logo from './statics/logo.svg'
 import { getPokemon, getPokemonDetails } from './api';
 //importamos la accion setPokemons para utilizarla en el mapDispatchToprops
 //y la renombramos con "as" para que no halla colision con la funcion seteadora.
-import { setPokemons } from './actions';
+import { getPokemonsWithDetails, setPokemons } from './actions';
 import { useDispatch, useSelector } from 'react-redux';
 
 function App() {
@@ -25,10 +25,15 @@ function App() {
   useEffect(() => {
     const fetchPokemons = async () => {
       const pokemonsRes = await getPokemon()
-      const pokemonsDetailed = await Promise.all(pokemonsRes.map(pokemon => getPokemonDetails(pokemon)))
+      //const pokemonsDetailed = await Promise.all(pokemonsRes.map(pokemon => getPokemonDetails(pokemon)))
+      //dispatch(setPokemons(pokemonsDetailed))
       //haremos un llamado de la accion setPokemons , que a su vez le estamos pasando los datos que vienen de la API
       //y la dispararemos con dispatch
-      dispatch(setPokemons(pokemonsDetailed))
+
+      //redux thunk
+
+
+      dispatch(getPokemonsWithDetails(pokemonsRes))
     }
     fetchPokemons()
   }, [])

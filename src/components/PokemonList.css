@@ -9,7 +9,6 @@
 
 .PokemonList img {
   display: flex;
-
   max-width: 100px;
   width: 100%;
 }
