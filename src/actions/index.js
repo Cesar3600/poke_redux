@@ -5,7 +5,7 @@
 // el payload seran los nuevos pokemons
 
 import { getPokemonDetails } from "../api";
-import { SET_POKEMONS } from "./types";
+import { LOADING_POKEMONS, SET_FAVORITE, SET_POKEMONS } from "./types";
 
 
 export const setPokemons = payload => ({
@@ -13,7 +13,15 @@ export const setPokemons = payload => ({
   payload
 })
 
+export const setFavorite = payload => ({
+  type: SET_FAVORITE,
+  payload
+})
 
+export const loadPokemons = payload => ({
+  type: LOADING_POKEMONS,
+  payload
+})
 
 //es una funcion que retorna otra funcion : ()=>() =>
 //la funcion recibe un dispatch
